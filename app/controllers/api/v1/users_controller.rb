@@ -10,6 +10,13 @@ module Api
       def authenticate
         render json: { message: 'Authenticate method' }, status: 200
       end
+
+      private
+
+      # Only allow a trusted parameter "white list" through.
+      # def user_params
+      #   params.require(:user).permit(:login, :password)
+      # end
     end
   end
 end
