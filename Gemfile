@@ -14,6 +14,7 @@ gem 'figaro'
 gem 'thin'
 gem 'mini_portile', '0.5.2'
 gem 'nokogiri', '1.6.1'
+gem 'redis'
 
 group :development do
   gem 'better_errors'
