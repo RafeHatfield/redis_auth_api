@@ -1,4 +1,15 @@
 RedisAuthApi::Application.routes.draw do
+
+  namespace :api, defaults: { format: :json }, path: '' do
+    namespace :v1 do
+      # resources :accounts, only: [:show, :list]
+      post '/create', to: 'users#create'
+      post '/authenticate' => 'users#authenticate'
+      get '/create', to: 'users#create'
+      get '/authenticate' => 'users#authenticate'
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
