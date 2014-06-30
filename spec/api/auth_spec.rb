@@ -33,8 +33,27 @@ describe 'Redis Auth API' do
   end
 
   describe 'post /authenticate' do
-    it 'should return 200 ok with valid credentials'
-    it 'should return 401 with invalid credentials'
+    before :each do
+      REDIS.set(@user[:login], @user[:password])
+    end
+
+    it 'should return 200 ok with valid credentials for a user' do
+      api_post '/authenticate', body: { login: @user[:login], password: @user[:password] }
+
+      expect(response.status).to eq 200
+    end
+
+    it 'should return 401 with invalid credentials for a user' do
+      api_post '/authenticate', body: { login: @user[:login], password: 'that' }
+
+      expect(response.status).to eq 401
+    end
+
+    it 'should return 401 with invalid credentials for a non-user' do
+      api_post '/authenticate', body: { login: 'this', password: 'that' }
+
+      expect(response.status).to eq 401
+    end
   end
   #
   #
