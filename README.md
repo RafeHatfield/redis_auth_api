@@ -1,6 +1,8 @@
 Redis Auth Api
 =========
 
+[![Code Climate](https://codeclimate.com/github/RafeHatfield/redis_auth_api.png)](https://codeclimate.com/github/RafeHatfield/redis_auth_api)
+
 Requirements
 
  * Create an API server in ruby (using Rails or Sinatra or similar) that provides an HTTP REST (JSON) Authentication API that could be used internally by other applications to authenticate users.
