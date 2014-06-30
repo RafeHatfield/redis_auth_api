@@ -19,3 +19,4 @@ Assumptions and Notes
  * refactor: too much logic in controller, move to user poro to store logic
  * refactor: create a validator class to centralize error checks
  * refactor: add tests to check error messages are correct
+ * investiage basic PCI DSS security reviews and make changes as required
