@@ -5,6 +5,9 @@ module Api
 
       def create
         if REDIS.exists(params[:body][:login])
+          render json: { message: 'Failed; Login Exists' }, status: 403
+        elsif params[:body][:password].blank?
+          render json: { message: 'Failed; Password blank' }, status: 403
         else
           REDIS.set(params[:body][:login], params[:body][:password])
           render json: { message: 'Success' }, status: 200
