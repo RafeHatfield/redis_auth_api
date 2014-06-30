@@ -15,15 +15,12 @@ module Api
       end
 
       def authenticate
-        render json: { message: 'Authenticate method' }, status: 200
+        if REDIS.get(params[:body][:login]) == params[:body][:password]
+          render json: { message: 'Authenticated' }, status: 200
+        else
+          render json: { message: 'Failed' }, status: 401
+        end
       end
-
-      private
-
-      # Only allow a trusted parameter "white list" through.
-      # def user_params
-      #   params.require(:user).permit(:login, :password)
-      # end
     end
   end
 end
