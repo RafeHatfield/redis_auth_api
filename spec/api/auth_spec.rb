@@ -1,11 +1,27 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'api/api_helper'
 
 describe 'Redis Auth API' do
+  before :each do
+    @user = { login: 'FirstLast', password: 'password' }
+  end
 
   describe 'post /create' do
-    it 'should return 200 ok for unique and valid username'
-    it 'should be invalid with blank password'
+    it 'should return 200 ok for unique and valid username' do
+      api_post '/create', body: { login: @user[:login], password: @user[:password] }
+
+      expect(response.status).to eq 200
+      expect(REDIS.exists(@user[:login])).to eq true
+      expect(REDIS.get(@user[:login])).to eq @user[:password]
+    end
+
+    it 'should be invalid with blank password' do
+      @user[:password] = ''
+      api_post '/create', body: { login: @user[:login], password: @user[:password] }
+
+      expect(response.status).to eq 403
+
+    end
     it 'should be invalid for non-unique usernames'
   end
 

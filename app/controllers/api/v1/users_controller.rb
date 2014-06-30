@@ -4,7 +4,11 @@ module Api
       respond_to :json
 
       def create
-        render json: { message: 'Create method' }, status: 200
+        if REDIS.exists(params[:body][:login])
+        else
+          REDIS.set(params[:body][:login], params[:body][:password])
+          render json: { message: 'Success' }, status: 200
+        end
       end
 
       def authenticate
