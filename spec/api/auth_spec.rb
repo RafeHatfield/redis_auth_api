@@ -3,26 +3,38 @@ require 'api/api_helper'
 
 describe 'Redis Auth API' do
   before :each do
-    @user = { login: 'FirstLast', password: 'password' }
+    @user1 = { login: 'FirstLast1', password: 'password' }
+    @user2 = { login: 'FirstLast2', password: 'password' }
   end
 
   describe 'post /create' do
     it 'should return 200 ok for unique and valid username' do
-      api_post '/create', body: { login: @user[:login], password: @user[:password] }
+      api_post '/create', body: { login: @user1[:login], password: @user1[:password] }
 
       expect(response.status).to eq 200
-      expect(REDIS.exists(@user[:login])).to eq true
-      expect(REDIS.get(@user[:login])).to eq @user[:password]
+      expect(REDIS.exists(@user1[:login])).to eq true
+      expect(REDIS.get(@user1[:login])).to eq @user1[:password]
     end
 
     it 'should be invalid with blank password' do
-      @user[:password] = ''
-      api_post '/create', body: { login: @user[:login], password: @user[:password] }
+      @user1[:password] = ''
+      api_post '/create', body: { login: @user1[:login], password: @user1[:password] }
 
       expect(response.status).to eq 403
-
+      expect(REDIS.exists(@user1[:login])).to eq false
     end
-    it 'should be invalid for non-unique usernames'
+
+    it 'should be invalid for non-unique usernames' do
+      @user2[:login] = @user1[:login]
+
+      api_post '/create', body: { login: @user1[:login], password: @user1[:password] }
+
+      expect(response.status).to eq 200
+
+      api_post '/create', body: { login: @user2[:login], password: @user2[:password] }
+
+      expect(response.status).to eq 403
+    end
   end
 
   describe 'post /authenticate' do
