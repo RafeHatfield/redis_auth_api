@@ -14,4 +14,8 @@ Requirements
 
 Assumptions and Notes
 
- * for speed this is being built as a full stack rails app, in practice this would have been built using rails-api
+ * for speed this is being built as a full stack rails app, in practice this would have been built using rails-api, or even sinatra for a simple app like this.
+ * refactor: passwords should not be stored plain text
+ * refactor: too much logic in controller, move to user poro to store logic
+ * refactor: create a validator class to centralize error checks
+ * refactor: add tests to check error messages are correct
