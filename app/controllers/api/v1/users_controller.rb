@@ -6,7 +6,7 @@ module Api
       def create
         errors = ValidateUser.call(params[:body][:login], params[:body][:password])
 
-        if errors.size
+        if errors.length > 0
           render json: { message: errors.join(', ') }, status: 403
         else
           CreateUser.call(params[:body][:login], params[:body][:password])
