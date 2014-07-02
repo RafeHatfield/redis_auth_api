@@ -3,7 +3,7 @@ require 'api/api_helper'
 
 describe 'Redis Auth API' do
   before :each do
-    @user = { login: 'FirstLast1', password: 'password' }
+    @user = { login: 'FirstLast', password: 'password' }
   end
 
   describe 'post /create' do
@@ -14,6 +14,8 @@ describe 'Redis Auth API' do
       expect(REDIS.exists(@user[:login])).to eq true
       # password is hashed when stored
       expect(REDIS.get(@user[:login])).to_not eq @user[:password]
+      password_hash = BCrypt::Password.new(REDIS.get(@user[:login]))
+      expect(password_hash).to eq @user[:password]
     end
 
     it 'should be invalid with blank password' do
