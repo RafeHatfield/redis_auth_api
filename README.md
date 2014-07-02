@@ -14,10 +14,11 @@ Requirements
 
 Assumptions and Notes
 
+ * expected JSON packet for both end points: { "body": { "login": "test", "password": "password" } }
  * for speed this is being built as a full stack rails app, in practice this would have been built using rails-api, or even sinatra for a simple app like this.
  * end points are /v1/create and /v1/authenticate to keep versioning, however as per spec have used rack-rewrite to make /create and /authenticate valid.
- * implemented using service objects to do the logic work, next refactor would incorporate a user poro
+ * implemented using service objects to do the logic work, next refactor would definitely incorporate a user poro
  * very basic rspec tests are implemented for outside-in dev process, 'rspec spec' to run (uses fakeredis gem so redis isn't needed to run test suite)
 
 TODO:
- * investigate basic PCI DSS security reviews and make changes as required
+ * further investigate basic PCI DSS security reviews and make changes as required
