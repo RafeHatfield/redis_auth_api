@@ -12,7 +12,8 @@ describe 'Redis Auth API' do
 
       expect(response.status).to eq 200
       expect(REDIS.exists(@user[:login])).to eq true
-      expect(REDIS.get(@user[:login])).to eq @user[:password]
+      # password is hashed when stored
+      expect(REDIS.get(@user[:login])).to_not eq @user[:password]
     end
 
     it 'should be invalid with blank password' do
@@ -34,7 +35,7 @@ describe 'Redis Auth API' do
 
   describe 'post /authenticate' do
     before :each do
-      REDIS.set(@user[:login], @user[:password])
+      REDIS.set(@user[:login], BCrypt::Password.create(@user[:password]))
     end
 
     it 'should return 200 ok with valid credentials for a user' do

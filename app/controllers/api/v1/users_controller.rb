@@ -15,7 +15,8 @@ module Api
       end
 
       def authenticate
-        if REDIS.get(params[:body][:login]) == params[:body][:password]
+        password_hash = REDIS.get(params[:body][:login]) ? BCrypt::Password.new(REDIS.get(params[:body][:login])) : nil
+        if password_hash == params[:body][:password]
           render json: { message: 'Authenticated' }, status: 200
         else
           render json: { message: 'Failed' }, status: 401
