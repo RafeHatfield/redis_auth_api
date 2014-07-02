@@ -15,8 +15,9 @@ Requirements
 Assumptions and Notes
 
  * for speed this is being built as a full stack rails app, in practice this would have been built using rails-api, or even sinatra for a simple app like this.
- * refactor: passwords should not be stored plain text
- * refactor: too much logic in controller, move to user poro to store logic
- * refactor: create a validator class to centralize error checks
- * refactor: add tests to check error messages are correct
- * investiage basic PCI DSS security reviews and make changes as required
+ * end points are /v1/create and /v1/authenticate to keep versioning, however as per spec have used rack-rewrite to make /create and /authenticate valid.
+ * implemented using service objects to do the logic work, next refactor would incorporate a user poro
+ * very basic rspec tests are implemented for outside-in dev process, 'rspec spec' to run (uses fakeredis gem so redis isn't needed to run test suite)
+
+TODO:
+ * investigate basic PCI DSS security reviews and make changes as required
