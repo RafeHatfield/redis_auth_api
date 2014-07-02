@@ -1,7 +1,7 @@
 RedisAuthApi::Application.routes.draw do
 
   namespace :api, defaults: { format: :json }, path: '' do
-    namespace :v1, path: '' do
+    namespace :v1 do
       post '/create', to: 'users#create'
       post '/authenticate' => 'users#authenticate'
     end
